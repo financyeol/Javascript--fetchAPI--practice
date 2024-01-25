@@ -1,0 +1,31 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.card-container {
+    width: 500px;
+    margin: auto;
+    position: relative;
+}
+
+.card-news {
+    border: 3px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+    height: 350px;
+    overflow: hidden;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #ff00ea;
+    color: white;
+    cursor: pointer;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: default;
+}

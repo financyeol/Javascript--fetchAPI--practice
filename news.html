@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카드뉴스 스타일 뉴스 표시</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="card-container">
+        <div id="news" class="card-news"></div>
+        <button id="prevBtn">이전</button>
+        <button id="nextBtn">다음</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const url = 'news.json';
+            let currentIndex = 0;
+            let newsData = [];
+
+            const newsContainer = document.getElementById('news');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    newsData = data.news_articles;
+                    displayNews(currentIndex);
+                })
+                .catch(error => console.error('Error:', error));
+
+            function displayNews(index) {
+                const article = newsData[index];
+                newsContainer.innerHTML = `
+                    <img src = ${article.image} style="max-width:50%; height:auto;">
+                    <h2>${article.headline}</h2>
+                    <p><strong>Date:</strong> ${article.date}</p>
+                    <p><strong>Author:</strong> ${article.author}</p>
+                    <p>${article.content}</p>
+                    
+                `;
+                prevBtn.disabled = index === 0;
+                nextBtn.disabled = index === newsData.length - 1;
+            }
+
+            prevBtn.addEventListener('click', () => {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    displayNews(currentIndex);
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                if (currentIndex < newsData.length - 1) {
+                    currentIndex++;
+                    displayNews(currentIndex);
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>
